@@ -1,0 +1,37 @@
+@startuml Activity_Order_Lifecycle
+|Customer|
+start
+:Arrive & request table;
+|System|
+:Assign table (State: Free -> Occupied);
+|Waiter|
+:Take order (multiple items);
+if (Modify before cooking begins?) then (yes)
+  :Modify / cancel order;
+  -> re-take;
+  detach
+else (no)
+|System|
+  :Send to KitchenQueue (Command);
+endif
+|Kitchen|
+:Prepare: Queued -> Cooking -> Ready;
+|System|
+:Notify waiter (Observer);
+|Waiter|
+:Serve food;
+|System|
+:Generate itemised bill (Facade);
+:Apply pricing (Strategy) + tax + tip;
+if (Split bill?) then (yes)
+  |Customer|
+  :Pay (split between guests);
+else (no)
+  |Customer|
+  :Pay full amount;
+endif
+|System|
+:Log to OrderHistoryLog (Singleton);
+:Table: Awaiting Bill -> Cleared;
+stop
+@enduml

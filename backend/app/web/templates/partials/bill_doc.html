@@ -1,0 +1,21 @@
+<div id="bill-doc" class="bill-doc">
+  <p class="strategy">{{ strategy_label }}</p>
+  <ul class="bill-lines">
+    {% for line in lines %}
+    <li><span class="desc">{{ line.desc }}</span><span class="amount">{{ "%.2f"|format(line.amount) }}</span></li>
+    {% endfor %}
+  </ul>
+  <dl class="bill-totals">
+    {% if discount and discount > 0 %}
+    <dt>Items</dt><dd>{{ "%.2f"|format(gross) }}</dd>
+    <dt>Discount ({{ strategy_label }})</dt><dd>-{{ "%.2f"|format(discount) }}</dd>
+    {% endif %}
+    <dt>Subtotal</dt><dd>{{ "%.2f"|format(subtotal) }}</dd>
+    <dt>Tax</dt><dd>{{ "%.2f"|format(tax) }}</dd>
+    <dt>Tip</dt><dd>{{ "%.2f"|format(tip) }}</dd>
+    <dt class="total">TOTAL</dt><dd class="total">{{ "%.2f"|format(total) }}</dd>
+  </dl>
+  {% if guests %}
+  <p class="per-guest">Per guest ({{ guests }}): {{ "%.2f"|format(per_guest) }}</p>
+  {% endif %}
+</div>

@@ -1,0 +1,21 @@
+@startuml Strategy_Pattern
+interface PricingStrategy {
+  + calculateTotal(o: Order): float
+}
+class StandardPricing
+class HappyHourPricing {
+  - rate = 0.20
+}
+class LoyaltyCardPricing {
+  - rate = 0.10
+}
+class Bill <<context>> {
+  - strategy: PricingStrategy
+  + setStrategy(s: PricingStrategy)
+  + total(o: Order): float
+}
+PricingStrategy <|.. StandardPricing
+PricingStrategy <|.. HappyHourPricing
+PricingStrategy <|.. LoyaltyCardPricing
+Bill o--> "1" PricingStrategy : uses
+@enduml

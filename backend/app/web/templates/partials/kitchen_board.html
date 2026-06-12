@@ -1,0 +1,4 @@
+{% for card in cards %}
+  {% include "partials/kitchen_card.html" %}
+{% endfor %}
+{% if not cards %}<p class="kitchen-empty">No active orders.</p>{% endif %}

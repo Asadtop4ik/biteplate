@@ -1,0 +1,25 @@
+@startuml Command_Pattern
+interface Command {
+  + execute()
+  + undo()
+}
+class PrepareOrderCommand
+class CancelOrderCommand
+class ExpediteOrderCommand
+class KitchenQueue <<invoker>> {
+  - history: List<Command>
+  + executeCommand(c: Command)
+  + undoLast()
+}
+class Chef <<receiver>> {
+  + prepare(o: Order)
+  + cancelPrep(o: Order)
+}
+Command <|.. PrepareOrderCommand
+Command <|.. CancelOrderCommand
+Command <|.. ExpediteOrderCommand
+KitchenQueue o--> "*" Command : invokes
+PrepareOrderCommand ..> Chef : calls
+CancelOrderCommand ..> Chef : calls
+ExpediteOrderCommand ..> Chef : calls
+@enduml

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Tables — BitePlate{% endblock %}
+{% block content %}
+<h1>Floor <small>{{ tables|length }} tables</small></h1>
+<div class="card-grid table-grid">
+  {% for table in tables %}
+    {% include "partials/table_card.html" %}
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+<div id="order-{{ card.order_code }}" class="kitchen-card status-{{ card.status }}">
+  <div class="kitchen-card-head">
+    <span class="order-code">{{ card.order_code }}</span>
+    <span class="table-no">Table {{ card.table_no }}</span>
+    <span class="status-badge status-{{ card.status }}">{{ card.status }}</span>
+  </div>
+  <div class="kitchen-card-actions">
+    <button class="btn btn-sm btn-primary"
+            hx-post="/kitchen/{{ card.order_code }}/prepare"
+            hx-target="#kitchen-flash" hx-swap="innerHTML">Prepare</button>
+    <button class="btn btn-sm btn-accent"
+            hx-post="/kitchen/{{ card.order_code }}/expedite"
+            hx-target="#kitchen-flash" hx-swap="innerHTML">Expedite</button>
+    <button class="btn btn-sm btn-danger"
+            hx-post="/kitchen/{{ card.order_code }}/cancel"
+            hx-target="#kitchen-flash" hx-swap="innerHTML">Cancel</button>
+    <button class="btn btn-sm btn-ghost"
+            hx-post="/kitchen/{{ card.order_code }}/undo"
+            hx-target="#kitchen-flash" hx-swap="innerHTML">Undo</button>
+  </div>
+</div>

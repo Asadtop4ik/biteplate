@@ -1,0 +1,27 @@
+@startuml Observer_Pattern
+interface Subject {
+  + attach(o: Observer)
+  + detach(o: Observer)
+  + notify()
+}
+interface Observer {
+  + update(o: Order)
+}
+class Order <<concrete subject>> {
+  - observers: List<Observer>
+  - status: OrderStatus
+  + attach(o: Observer)
+  + detach(o: Observer)
+  + notify()
+  + setStatus(s)
+}
+class WaiterNotifier
+class ManagerDashboard
+class KitchenDisplay
+Subject <|.. Order
+Observer <|.. WaiterNotifier
+Observer <|.. ManagerDashboard
+Observer <|.. KitchenDisplay
+Subject o--> "*" Observer : observes
+Order ..> Observer : notifies
+@enduml

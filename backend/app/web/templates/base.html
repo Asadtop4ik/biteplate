@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}BitePlate{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/app.css">
+  <script src="/static/htmx.min.js"></script>
+  <script src="/static/sse.js"></script>
+</head>
+<body>
+  {% set path = request.url.path %}
+  <nav class="navbar">
+    <a class="brand" href="/">BitePlate</a>
+    <div class="nav-links">
+      <a href="/"{% if path == '/' %} class="active"{% endif %}>Dashboard</a>
+      <a href="/tables"{% if path.startswith('/tables') %} class="active"{% endif %}>Tables</a>
+      <a href="/order"{% if path.startswith('/order') %} class="active"{% endif %}>Order</a>
+      <a href="/kitchen"{% if path.startswith('/kitchen') %} class="active"{% endif %}>Kitchen</a>
+      <a href="/bills"{% if path.startswith('/bill') %} class="active"{% endif %}>Bills</a>
+      <a href="/report"{% if path.startswith('/report') %} class="active"{% endif %}>Report</a>
+    </div>
+    {% if request.session.get('staff_code') %}
+    <div class="nav-user">
+      <span class="role">{{ request.session.get('role', '') }}</span>
+      <form method="post" action="/logout" class="logout-form">
+        <button type="submit" class="btn btn-sm btn-ghost">Logout</button>
+      </form>
+    </div>
+    {% endif %}
+  </nav>
+  <main class="content">
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

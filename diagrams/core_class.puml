@@ -1,0 +1,100 @@
+@startuml BitePlate_Core
+' Task 2a - Core System Class Diagram
+skinparam classAttributeIconSize 0
+hide circle
+abstract class MenuItem {
+  # id: str
+  # name: str
+  # basePrice: float
+  + getPrice(): float
+  + describe(): str
+  + station(): str
+}
+class Starter
+class MainCourse
+class Dessert
+class Beverage
+class ComboMeal {
+  - items: List<MenuItem>
+  - comboDiscount: float
+  + add(i: MenuItem)
+  + getPrice(): float
+}
+class Order {
+  - orderId: str
+  - tableNo: int
+  - staffId: str
+  - createdAt: datetime
+  + addItem(oi: OrderItem)
+  + total(): float
+  + confirm()
+}
+class OrderItem {
+  - qty: int
+  - notes: str
+  + lineTotal(): float
+}
+class Table {
+  - number: int
+  - seats: int
+  - state: TableState
+  + assign()
+  + reserve()
+  + clear()
+}
+class Reservation {
+  - customer: str
+  - time: datetime
+  - partySize: int
+  + confirm()
+}
+abstract class Staff {
+  # staffId: str
+  # name: str
+  + permissions(): Set
+  + role(): str
+}
+class Waiter
+class Chef
+class Cashier
+class Manager
+class OrderHistoryLog <<singleton>> {
+  - {static} _instance: OrderHistoryLog
+  - records: List<Order>
+  + {static} getInstance(): OrderHistoryLog
+  + append(o: Order)
+  + iterator(): Iterator
+}
+class Bill {
+  - subtotal: float
+  - tax: float
+  - tip: float
+  + addLine(l: BillLineItem)
+  + total(): float
+  + split(n: int): List
+}
+class BillLineItem {
+  - desc: str
+  - amount: float
+}
+interface Printable {
+  + printDoc(): str
+}
+MenuItem <|-- Starter
+MenuItem <|-- MainCourse
+MenuItem <|-- Dessert
+MenuItem <|-- Beverage
+Staff <|-- Waiter
+Staff <|-- Chef
+Staff <|-- Cashier
+Staff <|-- Manager
+Printable <|.. Bill
+ComboMeal o-- "2..*" MenuItem : contains
+Table "1" o-- "*" Order : placed at
+Table "1" o-- "*" Reservation : for
+Bill "1" *-- "1..*" BillLineItem
+Order "1" *-- "1..*" OrderItem
+Waiter ..> Order : creates
+Order ..> OrderHistoryLog : logs to
+Cashier ..> Bill : closes
+@enduml

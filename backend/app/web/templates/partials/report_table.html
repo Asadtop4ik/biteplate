@@ -1,0 +1,43 @@
+<div id="report-table">
+  <div class="report-stats">
+    <span>Orders: {{ count }}</span>
+    <span>Revenue: {{ '%.2f'|format(revenue) }}</span>
+    <span>Last 24h: {{ last_24h }}</span>
+    {% if most_frequent %}
+      <span>Most frequent: {{ most_frequent[0] }} ({{ most_frequent[1] }})</span>
+    {% else %}
+      <span>Most frequent: —</span>
+    {% endif %}
+  </div>
+
+  {% if records %}
+    <table class="report-records">
+      <thead>
+        <tr><th>Order</th><th>Table</th><th>Total</th><th>Items</th></tr>
+      </thead>
+      <tbody>
+        {% for rec in records %}
+        <tr>
+          <td>{{ rec.order_id }}</td>
+          <td>{{ rec.table_no }}</td>
+          <td>{{ '%.2f'|format(rec.total) }}</td>
+          <td>{% for n, q in rec.items %}{{ q }}x {{ n }}{% if not loop.last %}, {% endif %}{% endfor %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="empty">No orders recorded yet.</p>
+  {% endif %}
+
+  <h3>Top items</h3>
+  {% if top_items %}
+    <ol class="top-items">
+      {% for name, count in top_items %}
+        <li>{{ name }} — {{ count }}</li>
+      {% endfor %}
+    </ol>
+  {% else %}
+    <p class="empty">No items yet.</p>
+  {% endif %}
+</div>

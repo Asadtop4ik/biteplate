@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Kitchen — BitePlate{% endblock %}
+{% block content %}
+<div class="pass-header">
+  <span class="pass-title">The Pass</span>
+  <div class="pass-meta">
+    <span class="live-dot">Live</span>
+    <span class="pass-clock" id="pass-clock">--:--:--</span>
+  </div>
+</div>
+<div id="kitchen-flash"></div>
+<div id="kitchen-feed"
+     hx-ext="sse"
+     sse-connect="/sse/kitchen"
+     sse-swap="order_update"
+     hx-swap="innerHTML">
+  {% for card in orders %}
+    {% include "partials/kitchen_card.html" %}
+  {% endfor %}
+  {% if not orders %}<p class="kitchen-empty">The pass is clear — no active orders.</p>{% endif %}
+</div>
+<script>
+  (function () {
+    var el = document.getElementById('pass-clock');
+    function tick() {
+      var d = new Date();
+      el.textContent = d.toTimeString().slice(0, 8);
+    }
+    tick();
+    setInterval(tick, 1000);
+  })();
+</script>
+{% endblock %}

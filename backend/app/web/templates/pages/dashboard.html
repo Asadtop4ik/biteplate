@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — BitePlate{% endblock %}
+{% block content %}
+<h1 class="dash-greeting">Service is on, {{ role }}.</h1>
+<p class="dash-sub">Pick a station — from the floor to the pass.</p>
+<div class="card-grid">
+  <a class="card nav-card" href="/tables">
+    <div class="station-icon">🍽️</div>
+    <h2>Tables</h2>
+    <p>Seat, reserve and clear tables.</p>
+    <span class="go">Open floor →</span>
+  </a>
+  <a class="card nav-card" href="/order">
+    <div class="station-icon">📝</div>
+    <h2>Order</h2>
+    <p>Take orders from the menu.</p>
+    <span class="go">Start order →</span>
+  </a>
+  <a class="card nav-card" href="/kitchen">
+    <div class="station-icon">🔥</div>
+    <h2>Kitchen</h2>
+    <p>Live queue on the pass.</p>
+    <span class="go">Watch the pass →</span>
+  </a>
+  <a class="card nav-card" href="/bills">
+    <div class="station-icon">🧾</div>
+    <h2>Bills</h2>
+    <p>Price &amp; close bills (Strategy).</p>
+    <span class="go">Settle up →</span>
+  </a>
+  <a class="card nav-card" href="/report">
+    <div class="station-icon">📊</div>
+    <h2>Report</h2>
+    <p>Top items and revenue.</p>
+    <span class="go">See numbers →</span>
+  </a>
+</div>
+{% endblock %}

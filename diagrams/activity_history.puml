@@ -1,0 +1,19 @@
+@startuml Activity_History
+|System|
+start
+:Order confirmed;
+:OrderHistoryLog.getInstance()  <<Singleton controls access>>;
+:append(record): id, table, staffId, items, total, timestamp;
+|Manager|
+:Request report;
+|System|
+:Obtain iterator()  <<Iterator traversal>>;
+repeat
+  :Read next record;
+repeat while (More records?) is (yes)
+->no;
+:Aggregate: top-10 dishes, avg spend/table, peak hour;
+|Manager|
+:View analytics dashboard;
+stop
+@enduml

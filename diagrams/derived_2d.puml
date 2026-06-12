@@ -1,0 +1,23 @@
+@startuml Derived_2d_State
+abstract class TableState {
+  + next(t: Table)
+  + label(): str
+}
+class FreeState
+class OccupiedState
+class AwaitingBillState
+class Table <<context>> {
+  - _number: int
+  - _state: TableState
+  + set_state(s: TableState)
+  + advance()
+  + status(): str
+}
+TableState <|-- FreeState
+TableState <|-- OccupiedState
+TableState <|-- AwaitingBillState
+Table o--> "1" TableState : current
+FreeState ..> OccupiedState : creates
+OccupiedState ..> AwaitingBillState : creates
+AwaitingBillState ..> FreeState : creates
+@enduml

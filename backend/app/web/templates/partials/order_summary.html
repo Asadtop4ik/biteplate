@@ -1,0 +1,36 @@
+<div id="order-summary" class="order-summary card">
+  <h2>{{ order.code }}
+    <span class="badge badge-{{ order.status }}">{{ order.status }}</span>
+  </h2>
+
+  <ul class="order-lines">
+    {% for line in lines %}{% include 'partials/order_item_row.html' %}{% endfor %}
+  </ul>
+
+  <p class="order-subtotal">Subtotal: {{ '%.2f'|format(subtotal) }}</p>
+
+  {% if order.status != 'new' %}
+  <a class="btn btn-primary" href="/bill/{{ order.code }}">View Bill</a>
+  {% endif %}
+
+  {% if order.status == 'new' %}
+  <div class="order-menu">
+    {% for item in menu %}
+    <form class="add-item-form"
+          hx-post="/order/{{ order.code }}/item"
+          hx-target="#order-summary"
+          hx-swap="outerHTML">
+      <input type="hidden" name="item_code" value="{{ item.item_code }}">
+      <input type="number" name="qty" value="1" min="1" class="qty-input">
+      <input type="text" name="notes" placeholder="notes" class="notes-input">
+      <button type="submit" class="btn btn-sm">Add {{ item.name }}</button>
+    </form>
+    {% endfor %}
+  </div>
+
+  <button class="btn btn-primary"
+          hx-post="/order/{{ order.code }}/confirm"
+          hx-target="#order-summary"
+          hx-swap="outerHTML">Confirm</button>
+  {% endif %}
+</div>

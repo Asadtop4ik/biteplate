@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Order — BitePlate{% endblock %}
+{% block content %}
+<h1>Take Order</h1>
+
+<form class="start-order-form"
+      hx-post="/order/start"
+      hx-target="#order-summary"
+      hx-swap="outerHTML">
+  <label>Table
+    <select id="table_number" name="table_number">
+      {% for table in tables %}
+      <option value="{{ table.number }}">Table {{ table.number }} ({{ table.seats }} seats)</option>
+      {% endfor %}
+    </select>
+  </label>
+  <button type="submit" class="btn btn-primary">Start order</button>
+</form>
+
+<p class="hint">Start an order to reveal the menu; each item then has an Add button.</p>
+
+<div id="order-summary"></div>
+{% endblock %}

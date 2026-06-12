@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Report — BitePlate{% endblock %}
+{% block content %}
+<h1>Manager Report</h1>
+<form class="report-filter" hx-post="/report" hx-target="#report-table" hx-swap="outerHTML">
+  <label>Table
+    <input type="number" name="table_no" min="1" placeholder="all">
+  </label>
+  <label>Top N
+    <input type="number" name="n" min="1" value="5">
+  </label>
+  <button type="submit" class="btn">Filter</button>
+</form>
+{% include "partials/report_table.html" %}
+{% endblock %}

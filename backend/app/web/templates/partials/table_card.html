@@ -1,0 +1,19 @@
+<div class="card table-card state-{{ table.state | replace(' ', '-') }}" id="table-{{ table.number }}">
+  <h2>Table {{ table.number }}</h2>
+  <p class="seats">{{ table.seats }} seats</p>
+  <span class="badge state-{{ table.state | replace(' ', '-') }}">{{ table.state }}</span>
+  <div class="table-actions">
+    <button class="btn btn-sm btn-primary"
+            hx-post="/tables/{{ table.number }}/seat"
+            hx-target="#table-{{ table.number }}"
+            hx-swap="outerHTML">Seat</button>
+    <button class="btn btn-sm btn-ghost"
+            hx-post="/tables/{{ table.number }}/reserve"
+            hx-target="#table-{{ table.number }}"
+            hx-swap="outerHTML">Reserve</button>
+    <button class="btn btn-sm btn-accent"
+            hx-post="/tables/{{ table.number }}/advance"
+            hx-target="#table-{{ table.number }}"
+            hx-swap="outerHTML">Advance</button>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Bill {{ order.code }} — BitePlate{% endblock %}
+{% block content %}
+<h1>Bill {{ order.code }} <small>Table {{ order.table_number }}</small></h1>
+
+<form class="bill-form" hx-post="/bill/{{ order.code }}" hx-target="#bill-doc" hx-swap="outerHTML">
+  <label>Strategy
+    <select name="strategy">
+      {% for s in strategies %}
+      <option value="{{ s }}"{% if s == strategy_name %} selected{% endif %}>{{ s }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <label>Tip
+    <input type="number" name="tip" step="0.01" min="0" value="{{ "%.2f"|format(tip) }}">
+  </label>
+  <label>Guests
+    <input type="number" name="guests" min="1" value="1">
+  </label>
+  <button type="submit" class="btn">Recalculate</button>
+</form>
+
+{% include "partials/bill_doc.html" %}
+
+<div class="flash-area" id="bill-flash"></div>
+<button class="btn btn-danger" hx-post="/bill/{{ order.code }}/close"
+        hx-target="#bill-flash" hx-swap="innerHTML">Close bill</button>
+{% endblock %}

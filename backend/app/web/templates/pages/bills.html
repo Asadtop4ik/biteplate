@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Bills — BitePlate{% endblock %}
+{% block content %}
+<h1>Bills</h1>
+{% if orders %}
+<table class="bills-table">
+  <thead>
+    <tr><th>Order</th><th>Table</th><th>Status</th><th></th></tr>
+  </thead>
+  <tbody>
+    {% for o in orders %}
+    <tr>
+      <td>{{ o.code }}</td>
+      <td>{{ o.table_number }}</td>
+      <td><span class="badge badge-{{ o.status }}">{{ o.status }}</span></td>
+      <td><a class="btn btn-sm" href="/bill/{{ o.code }}">View bill</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No bills yet — confirm an order first.</p>
+{% endif %}
+{% endblock %}

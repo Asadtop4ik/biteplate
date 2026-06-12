@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Login — BitePlate{% endblock %}
+{% block content %}
+<div class="card login-card">
+  <h1>Sign in</h1>
+  {% if error %}
+    {% include "partials/flash.html" %}
+  {% endif %}
+  <form method="post" action="/login">
+    <label>Staff code
+      <input type="text" name="code" autocomplete="username" required>
+    </label>
+    <label>Password
+      <input type="password" name="password" autocomplete="current-password" required>
+    </label>
+    <button type="submit" class="btn">Login</button>
+  </form>
+  <p class="login-hint">
+    Demo logins (staff code / password):<br>
+    <code>M01</code> / <code>manager</code> &nbsp;·&nbsp;
+    <code>W01</code> / <code>waiter</code> &nbsp;·&nbsp;
+    <code>C01</code> / <code>chef</code> &nbsp;·&nbsp;
+    <code>K01</code> / <code>cashier</code>
+  </p>
+</div>
+{% endblock %}
